@@ -12,7 +12,7 @@ from patchpilot.tools.sandbox import SandboxRunner
 async def test_run_command_success(tmp_path: Path) -> None:
     """Run 'python -c "print(42)"', verify exit_code=0."""
     runner = SandboxRunner()
-    exit_code, stdout, stderr = await runner.run_command(
+    exit_code, stdout, _stderr = await runner.run_command(
         f'"{sys.executable}" -c "print(42)"', cwd=str(tmp_path)
     )
     assert exit_code == 0
@@ -23,7 +23,7 @@ async def test_run_command_success(tmp_path: Path) -> None:
 async def test_run_command_failure(tmp_path: Path) -> None:
     """Run a failing command, verify non-zero exit code."""
     runner = SandboxRunner()
-    exit_code, stdout, stderr = await runner.run_command(
+    exit_code, _stdout, _stderr = await runner.run_command(
         f'"{sys.executable}" -c "raise Exception()"', cwd=str(tmp_path)
     )
     assert exit_code != 0

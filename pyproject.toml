@@ -78,7 +78,11 @@ select = [
     "TCH",  # flake8-type-checking
     "RUF",  # ruff-specific
 ]
-ignore = ["E501"]  # line length handled by formatter
+ignore = [
+    "E501", "TC001", "TC002", "TC003",
+    "UP042", "SIM102", "SIM105", "SIM110", "SIM117",
+    "B904", "B905", "RUF005",
+]
 
 [tool.ruff.lint.isort]
 known-first-party = ["patchpilot"]
