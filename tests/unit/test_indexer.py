@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -27,7 +28,7 @@ def test_chunk_generic_file() -> None:
 
 
 @pytest.mark.asyncio
-async def test_index_repository(tmp_path: pytest.TempPathFactory) -> None:
+async def test_index_repository(tmp_path: Path) -> None:
     """Mock chromadb, verify repository indexing."""
     f = tmp_path / "test.py"
     f.write_text("def foo(): return 1\n", encoding="utf-8")

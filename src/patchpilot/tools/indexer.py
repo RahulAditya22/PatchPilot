@@ -121,7 +121,7 @@ class CodebaseIndexer:
         Returns:
             list[dict[str, Any]]: List of search results.
         """
-        results = self.collection.query(
+        results: Any = self.collection.query(
             query_texts=[query],
             n_results=n_results,
         )
@@ -129,22 +129,22 @@ class CodebaseIndexer:
         output: list[dict[str, Any]] = []
         if results and "documents" in results and results["documents"]:
             docs = results["documents"][0]
-            metas = (
-                results.get("metadatas", [[]])[0] if results.get("metadatas") else [{}] * len(docs)
-            )  # type: ignore[index]
+            metas = results["metadatas"][0] if results.get("metadatas") else [{}] * len(docs)
             distances = (
-                results.get("distances", [[]])[0] if results.get("distances") else [0.0] * len(docs)
-            )  # type: ignore[index]
+                results["distances"][0]
+                if results.get("distances")
+                else [0.0] * len(docs)
+            )
 
             for doc, meta, dist in zip(docs, metas, distances):
                 output.append(
                     {
-                        "file_path": meta.get("file_path", ""),
+                        "file_path": meta.get("file_path", "") if isinstance(meta, dict) else "",
                         "content": doc,
                         "score": 1.0 / (1.0 + float(dist)),
-                        "start_line": meta.get("start_line", 0),
-                        "end_line": meta.get("end_line", 0),
-                        "type": meta.get("type", "generic"),
+                        "start_line": meta.get("start_line", 0) if isinstance(meta, dict) else 0,
+                        "end_line": meta.get("end_line", 0) if isinstance(meta, dict) else 0,
+                        "type": meta.get("type", "generic") if isinstance(meta, dict) else "generic",
                     }
                 )
 

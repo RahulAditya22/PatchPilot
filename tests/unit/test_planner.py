@@ -10,7 +10,7 @@ from patchpilot.models import IssueRequirement, Plan, TokenUsage
 
 
 @pytest.fixture
-def planner(mock_llm_client) -> PlanningAgent:
+def planner(mock_llm_client: MagicMock) -> PlanningAgent:
     return PlanningAgent(llm_client=mock_llm_client)
 
 

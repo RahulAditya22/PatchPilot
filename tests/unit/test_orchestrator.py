@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import os
+from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
@@ -191,7 +191,7 @@ async def test_pipeline_error_returns_failed_result(orchestrator: Orchestrator) 
     assert "Cloning failed" in (result.error_message or "")
 
 
-def test_write_changes_creates_files(tmp_path: os.PathLike) -> None:
+def test_write_changes_creates_files(tmp_path: Path) -> None:
     from patchpilot.models import CodeChange
 
     change = CodeChange(
